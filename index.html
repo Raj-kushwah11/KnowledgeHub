@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>KnowledgeHub - GK for Students</title>
   <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
   <header>
     <h1>KnowledgeHub</h1>
@@ -13,7 +15,7 @@
     <nav>
       <a href="#">Home</a>
       <a href="#">Current Affairs</a>
-      <a href="#">GK Quiz</a>
+      <a href="#" onclick="showQuiz()">GK Quiz</a>
     </nav>
   </header>
 
@@ -35,5 +37,73 @@
   <footer>
     <p>© 2025 KnowledgeHub | Bilingual GK for School Students</p>
   </footer>
+
+
+  <!-- Try a GK Quiz! -->
+
+
+  <!-- GK Quiz Section -->
+
+
+  <section id="gk-quiz" style="display: none;">
+    <h2>🧠 GK Quiz - Test Your Knowledge!</h2>
+    <div id="quiz-container">
+      <p id="question">Loading question...</p>
+      <div id="options"></div>
+      <button onclick="nextQuestion()">Next</button>
+      <p id="result"></p>
+    </div>
+  </section>
+
+
+    <script>
+      const quizData = [
+      {
+        question: "Which planet is known as the Red Planet?",
+      options: ["Earth", "Mars", "Jupiter", "Saturn"],
+      answer: "Mars"
+    },
+      {
+        question: "Who wrote the Indian national anthem?",
+      options: ["Bankim Chandra", "Rabindranath Tagore", "Mahatma Gandhi", "Subhash Chandra Bose"],
+      answer: "Rabindranath Tagore"
+    }
+      ];
+
+      let currentQuestion = 0;
+
+      function showQuiz() {
+        document.getElementById('gk-quiz').style.display = 'block';
+      document.getElementById('current-affairs').style.display = 'none'; // optional
+      loadQuestion();
+  }
+
+      function loadQuestion() {
+    const q = quizData[currentQuestion];
+      document.getElementById('question').textContent = q.question;
+      const optionsDiv = document.getElementById('options');
+      optionsDiv.innerHTML = '';
+
+    q.options.forEach(option => {
+      const btn = document.createElement('button');
+      btn.textContent = option;
+      btn.onclick = () => checkAnswer(option);
+      optionsDiv.appendChild(btn);
+    });
+  }
+
+      function checkAnswer(selected) {
+    const correct = quizData[currentQuestion].answer;
+      document.getElementById('result').textContent = selected === correct ? "✅ Correct!" : "❌ Wrong! Correct is: " + correct;
+  }
+
+      function nextQuestion() {
+        document.getElementById('result').textContent = '';
+      currentQuestion = (currentQuestion + 1) % quizData.length;
+      loadQuestion();
+  }
+  </script>
+
 </body>
+
 </html>
