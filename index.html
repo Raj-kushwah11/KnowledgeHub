@@ -11,11 +11,11 @@
 <body>
   <header>
     <h1>KnowledgeHub</h1>
-    <p>General Knowledge for Students (10–18 Years)</p>
+    <p>General Knowledge for Students (10-18 Years)</p>
     <nav>
       <a href="#">Home</a>
-      <a href="#">Current Affairs</a>
-      <a href="#" onclick="showQuiz()">GK Quiz</a>
+      <a href="#">Current Affairs</a> 
+      <a href="quiz.html" target="_blank">GK Quiz</a>
     </nav>
   </header>
 
@@ -56,52 +56,63 @@
   </section>
 
 
-    <script>
-      const quizData = [
+  <script>
+    const quizData = [
       {
         question: "Which planet is known as the Red Planet?",
-      options: ["Earth", "Mars", "Jupiter", "Saturn"],
-      answer: "Mars"
-    },
+        options: ["Earth", "Mars", "Jupiter", "Saturn"],
+        answer: "Mars"
+      },
       {
         question: "Who wrote the Indian national anthem?",
-      options: ["Bankim Chandra", "Rabindranath Tagore", "Mahatma Gandhi", "Subhash Chandra Bose"],
-      answer: "Rabindranath Tagore"
-    }
-      ];
+        options: ["Bankim Chandra", "Rabindranath Tagore", "Mahatma Gandhi", "Subhash Chandra Bose"],
+        answer: "Rabindranath Tagore"
+      }
+    ];
 
-      let currentQuestion = 0;
+    let currentQuestion = 0;
 
-      function showQuiz() {
-        document.getElementById('gk-quiz').style.display = 'block';
-      document.getElementById('current-affairs').style.display = 'none'; // optional
+    function showQuiz() {
+      // Hide sab sections
+      document.body.innerHTML = `
+    <section id="gk-quiz">
+      <h2>🧠 GK Quiz - Test Your Knowledge!</h2>
+      <div id="quiz-container">
+        <p id="question">Loading question...</p>
+        <div id="options"></div>
+        <button onclick="nextQuestion()">Next</button>
+        <p id="result"></p>
+      </div>
+    </section>
+  `;
       loadQuestion();
-  }
+    }
 
-      function loadQuestion() {
-    const q = quizData[currentQuestion];
+
+    function loadQuestion() {
+      const q = quizData[currentQuestion];
       document.getElementById('question').textContent = q.question;
       const optionsDiv = document.getElementById('options');
       optionsDiv.innerHTML = '';
 
-    q.options.forEach(option => {
-      const btn = document.createElement('button');
-      btn.textContent = option;
-      btn.onclick = () => checkAnswer(option);
-      optionsDiv.appendChild(btn);
-    });
-  }
+      q.options.forEach(option => {
+        const btn = document.createElement('button');
+        btn.textContent = option;
+        btn.onclick = () => checkAnswer(option);
+        optionsDiv.appendChild(btn);
+      });
+    }
 
-      function checkAnswer(selected) {
-    const correct = quizData[currentQuestion].answer;
+    function checkAnswer(selected) {
+      const correct = quizData[currentQuestion].answer;
       document.getElementById('result').textContent = selected === correct ? "✅ Correct!" : "❌ Wrong! Correct is: " + correct;
-  }
+    }
 
-      function nextQuestion() {
-        document.getElementById('result').textContent = '';
+    function nextQuestion() {
+      document.getElementById('result').textContent = '';
       currentQuestion = (currentQuestion + 1) % quizData.length;
       loadQuestion();
-  }
+    }
   </script>
 
 </body>
